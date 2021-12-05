@@ -1,16 +1,16 @@
 package prv.ferchichi.moona.exception;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 
 import reactor.core.publisher.Mono;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	  @ExceptionHandler(value = Exception.class)
-	  public Mono<String> resourceNotFoundException(Exception ex, WebRequest request) {
-	    return Mono.just(ex.getMessage());
+	  @ExceptionHandler(value = MoonaException.class)
+	  public Mono<ResponseEntity<String>> resourceNotFoundException(MoonaException ex) {
+	    return Mono.just(new ResponseEntity<>(ex.getMessage(), ex.getType()));
 	  }
 }
